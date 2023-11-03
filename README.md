@@ -1,0 +1,2 @@
+# nvim
+Private Neovim configuration
