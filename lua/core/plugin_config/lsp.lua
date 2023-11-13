@@ -108,7 +108,60 @@ nvim_lsp.stylelint_lsp.setup {
 -- PHP
 nvim_lsp.intelephense.setup {
   cmd = { "intelephense", "--stdio" },
-  filetypes = { "php" }
+  filetypes = { "php" },
+  settings = {
+    intelephense = {
+      stubs = {
+        "bcmath",
+        "bz2",
+        "calendar",
+        "Core",
+        "curl",
+        "zip",
+        "zlib",
+        "wordpress",
+        "woocommerce",
+        "acf-pro",
+        "wordpress-globals",
+        "wp-cli",
+        "genesis",
+        "polylang"
+      },
+      environment = {
+        includePaths = '~.composer/vendor/php-stubs/' -- this line forces the composer path for the stubs in case inteliphense don't find it...
+      },
+      files = {
+        maxSize = 5000000,
+      },
+    },
+  }
+}
+
+local linters = {
+  phpcs = {
+    command = "vendor/bin/phpcs",
+    debounce = 300,
+    rootPatterns = { "composer.lock", "vendor", ".git" },
+    args = { "--report=emacs", "-s", "-" },
+    offsetLine = 0,
+    offsetColumn = 0,
+    sourceName = "phpcs",
+    formatLines = 1,
+    formatPattern = {
+      "^.*:(\\d+):(\\d+):\\s+(.*)\\s+-\\s+(.*)(\\r|\\n)*$",
+      {
+        line = 1,
+        column = 2,
+        message = 4,
+        security = 3
+      }
+    },
+    securities = {
+      error = "error",
+      warning = "warning",
+    },
+    requiredFiles = { "vendor/bin/phpcs" }
+  },
 }
 ------------
 -- Javascript typescript react
@@ -179,6 +232,20 @@ for type, icon in pairs(signs) do
   local hl = "DiagnosticSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
 end
+
+local filetypes = {
+  php = { "phpcs" },
+}
+
+nvim_lsp.diagnosticls.setup {
+  on_attach = on_attach,
+  filetypes = vim.tbl_keys(filetypes),
+  init_options = {
+    filetypes = filetypes,
+    linters = linters,
+  },
+
+}
 
 vim.diagnostic.config({
   virtual_text = {

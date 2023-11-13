@@ -58,6 +58,7 @@ packer.startup(function(use)
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'dinhhuy258/git.nvim' -- For git blame & browse
+  use { 'mhartington/formatter.nvim' }
   use {
     "klen/nvim-config-local",
     config = function()
@@ -71,9 +72,9 @@ packer.startup(function(use)
         hashfile = vim.fn.stdpath("data") .. "/config-local",
 
         autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
-        commands_create = true,   -- Create commands (ConfigLocalSource, ConfigLocalEdit, ConfigLocalTrust, ConfigLocalIgnore)
-        silent = false,           -- Disable plugin messages (Config loaded/ignored)
-        lookup_parents = false,   -- Lookup config files in parent directories
+        commands_create = true,     -- Create commands (ConfigLocalSource, ConfigLocalEdit, ConfigLocalTrust, ConfigLocalIgnore)
+        silent = false,             -- Disable plugin messages (Config loaded/ignored)
+        lookup_parents = false,     -- Lookup config files in parent directories
       }
     end
   }
