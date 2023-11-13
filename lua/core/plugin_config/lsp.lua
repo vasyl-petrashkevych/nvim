@@ -1,112 +1,191 @@
--- Setup language servers.
-local lspconfig = require('lspconfig')
-lspconfig.phpactor.setup{}
-lspconfig.tsserver.setup {}
-lspconfig.lua_ls.setup {}
--- Add additional capabilities supported by nvim-cmp
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
-local servers = { 'clangd', 'cssls', 'lua_ls', 'tsserver', 'phpactor','intelephense' }
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    -- on_attach = my_custom_on_attach,
-    capabilities = capabilities,
-  }
+--vim.lsp.set_log_level("debug")
+
+local status, nvim_lsp = pcall(require, "lspconfig")
+if (not status) then return end
+
+local protocol = require('vim.lsp.protocol')
+
+local augroup_format = vim.api.nvim_create_augroup("Format", { clear = true })
+local enable_format_on_save = function(_, bufnr)
+  vim.api.nvim_clear_autocmds({ group = augroup_format, buffer = bufnr })
+  vim.api.nvim_create_autocmd("BufWritePre", {
+    group = augroup_format,
+    buffer = bufnr,
+    callback = function()
+      vim.lsp.buf.format({ bufnr = bufnr })
+    end,
+  })
 end
--- CSS language server setup with custom configuration
-lspconfig.cssls.setup{
-    filetypes = { 'css', 'scss', 'less' },
-    root_dir = lspconfig.util.root_pattern('package.json', '.git'),
-    settings = {
-        css = {
-            validate = true,
-        },
-        scss = {
-            validate = true,
-        },
-        less = {
-            validate = true,
-        },
-    },
-}
--- TypeScript language server setup with custom configuration
-lspconfig.tsserver.setup{
-    filetypes = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' },
-    root_dir = lspconfig.util.root_pattern('package.json', 'tsconfig.json', 'jsconfig.json', '.git'),
-    settings = {
-        -- Add custom TypeScript/TSX server settings here
-        -- For example:
-        -- ["typescript"] = {
-        --     option = value,
-        -- },
-        -- ["typescript.tsx"] = {
-        --     option = value,
-        -- },
-    },
-}
 
-lspconfig.intelephense.setup({
-    settings = {
-        intelephense = {
-            stubs = { 
-                "bcmath",
-                "bz2",
-                "calendar",
-                "Core",
-                "curl",
-                "zip",
-                "zlib",
-                "wordpress",
-                "woocommerce",
-                "acf-pro",
-                "wordpress-globals",
-                "wp-cli",
-                "genesis",
-                "polylang"
-            },
-            environment = {
-              includePaths = '/home/wisehunter/.composer/vendor/php-stubs/' -- this line forces the composer path for the stubs in case inteliphense don't find it...
-            },
-            files = {
-                maxSize = 5000000;
-            };
-        };
-    }
-});
-
--- Global mappings.
--- See `:help vim.diagnostic.*` for documentation on any of the below functions
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
-
--- Use LspAttach autocommand to only map the following keys
+-- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-vim.api.nvim_create_autocmd('LspAttach', {
-  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-  callback = function(ev)
-    -- Enable completion triggered by <c-x><c-o>
-    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
 
-    -- Buffer local mappings.
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    local opts = { buffer = ev.buf }
-    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
-    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-    vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
-    vim.keymap.set('n', '<space>wl', function()
-      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-    end, opts)
-    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
-    vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
-    vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
-    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
-    vim.keymap.set('n', '<space>f', function()
-      vim.lsp.buf.format { async = true }
-    end, opts)
+  --Enable completion triggered by <c-x><c-o>
+  --local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+  --buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap = true, silent = true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  --buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  --buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+end
+
+protocol.CompletionItemKind = {
+  '', -- Text
+  '', -- Method
+  '', -- Function
+  '', -- Constructor
+  '', -- Field
+  '', -- Variable
+  '', -- Class
+  'ﰮ', -- Interface
+  '', -- Module
+  '', -- Property
+  '', -- Unit
+  '', -- Value
+  '', -- Enum
+  '', -- Keyword
+  '﬌', -- Snippet
+  '', -- Color
+  '', -- File
+  '', -- Reference
+  '', -- Folder
+  '', -- EnumMember
+  '', -- Constant
+  '', -- Struct
+  '', -- Event
+  'ﬦ', -- Operator
+  '', -- TypeParameter
+}
+
+-- Set up completion using nvim_cmp with LSP source
+local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+nvim_lsp.lua_ls.setup {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    enable_format_on_save(client, bufnr)
   end,
+  settings = {
+    Lua = {
+      diagnostics = {
+        -- Get the language server to recognize the `vim` global
+        globals = { 'vim' },
+      },
+
+      workspace = {
+        -- Make the server aware of Neovim runtime files
+        library = vim.api.nvim_get_runtime_file("", true),
+        checkThirdParty = false
+      },
+    },
+  },
+}
+-- css
+nvim_lsp.cssls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities
+}
+
+nvim_lsp.stylelint_lsp.setup {
+  cmd = { "stylelint-lsp", "--stdio" },
+  filetypes = { "css", "less", "scss" },
+  settings = {
+    stylelintplus = {
+      autoFixOnSave = true,
+      enable = true
+    }
+  }
+}
+------------
+-- PHP
+nvim_lsp.intelephense.setup {
+  cmd = { "intelephense", "--stdio" },
+  filetypes = { "php" }
+}
+------------
+-- Javascript typescript react
+nvim_lsp.eslint.setup({
+  cmd = { "vscode-eslint-language-server", "--stdio" },
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  on_attach = function(client, bufnr)
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
+    })
+  end,
+  settings = {
+    codeAction = {
+      disableRuleComment = {
+        enable = true,
+        location = "separateLine"
+      },
+      showDocumentation = {
+        enable = true
+      }
+    },
+    codeActionOnSave = {
+      enable = false,
+      mode = "all"
+    },
+    experimental = {
+      useFlatConfig = false
+    },
+    format = true,
+    nodePath = "",
+    onIgnoredFiles = "off",
+    problems = {
+      shortenToSingleLine = false
+    },
+    quiet = false,
+    rulesCustomizations = {},
+    run = "onType",
+    useESLintClass = false,
+    validate = "on",
+    workingDirectory = {
+      mode = "location"
+    }
+  }
+})
+nvim_lsp.tsserver.setup {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    enable_format_on_save(client, bufnr)
+  end,
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  cmd = { "typescript-language-server", "--stdio" },
+  capabilities = capabilities
+}
+----------------
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    underline = true,
+    update_in_insert = false,
+    virtual_text = { spacing = 4, prefix = "\u{ea71}" },
+    severity_sort = true,
+  }
+)
+
+-- Diagnostic symbols in the sign column (gutter)
+local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
+for type, icon in pairs(signs) do
+  local hl = "DiagnosticSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+end
+
+vim.diagnostic.config({
+  virtual_text = {
+    prefix = '●'
+  },
+  update_in_insert = true,
+  float = {
+    source = "always", -- Or "if_many"
+  },
 })
