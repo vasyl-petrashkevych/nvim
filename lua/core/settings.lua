@@ -3,6 +3,9 @@ vim.cmd("autocmd!")
 vim.scriptencoding = 'utf-8'
 vim.opt.encoding = 'utf-8'
 vim.opt.fileencoding = 'utf-8'
+-- Spelling
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
 
 vim.wo.number = true -- Show Line numbers
 
