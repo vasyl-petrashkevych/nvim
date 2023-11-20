@@ -30,4 +30,4 @@ vim.keymap.set('n', 'gp', '<Cmd>Lspsaga peek_definition<CR>', opts)
 vim.keymap.set('n', 'gr', '<Cmd>Lspsaga rename<CR>', opts)
 
 -- code action
-vim.keymap.set({ "n", "v" }, "<leader>ca", "<cmd>Lspsaga code_action<CR>")
+vim.keymap.set({ "n", "v" }, "<Space>ca", "<cmd>Lspsaga code_action<CR>")

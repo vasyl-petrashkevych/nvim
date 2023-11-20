@@ -3,9 +3,11 @@ vim.g.loaded_netrwPlugin = 1
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
+local status, nvim_tree = pcall(require, "nvim-tree")
+if (not status) then return end
 
 -- OR setup with some options
-require("nvim-tree").setup({
+nvim_tree.setup({
   sort_by = "case_sensitive",
   view = {
     width = 30,
