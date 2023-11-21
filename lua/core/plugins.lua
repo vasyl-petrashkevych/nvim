@@ -31,6 +31,7 @@ packer.startup(function(use)
   use 'nvim-lua/plenary.nvim'           -- Common utilities
   use 'onsails/lspkind-nvim'            -- vscode-like pictograms
   use 'hrsh7th/cmp-buffer'              -- nvim-cmp source for buffer words
+  use('MunifTanjim/prettier.nvim')
   use 'hrsh7th/cmp-nvim-lsp'            -- nvim-cmp source for neovim's built-in LSP
   use 'hrsh7th/nvim-cmp'                -- Completion
   use 'neovim/nvim-lspconfig'           -- LSP
@@ -68,7 +69,8 @@ packer.startup(function(use)
   })
   use 'akinsho/nvim-bufferline.lua'
   -- use 'github/copilot.vim'
-
+  -- Editor
+  use('/RRethy/vim-illuminate')
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'dinhhuy258/git.nvim' -- For git blame & browse

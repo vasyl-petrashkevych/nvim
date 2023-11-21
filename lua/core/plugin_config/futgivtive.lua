@@ -1,2 +1,2 @@
-vim.keymap.set('n', '<leader>g', ':Git<CR>')
-vim.keymap.set('n', '<leader>gm', ':Git commit<CR>')
+vim.keymap.set('n', '<Space>gg', ':Git<CR>')
+vim.keymap.set('n', '<Space>gm', ':Git commit<CR>')
