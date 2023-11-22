@@ -66,3 +66,5 @@ vim.api.nvim_exec([[
     autocmd BufWritePost *.php FormatWrite
   augroup END
 ]], false)
+
+

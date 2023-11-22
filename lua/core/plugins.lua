@@ -1,5 +1,3 @@
-local status, packer = pcall(require, "packer")
-
 local ensure_packer = function()
   local fn = vim.fn
   local install_path = fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
@@ -11,89 +9,77 @@ local ensure_packer = function()
   return false
 end
 
+local packer_bootstrap = ensure_packer()
 
-if (not status) then
-  print("Packer is not installed")
-  ensure_packer()
-  return
-end
-
-vim.cmd [[packadd packer.nvim]]
-
-packer.startup(function(use)
+return require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use 'Mofiqul/vscode.nvim'
+
+  -- Editor plugins --
+  use "nvim-lua/plenary.nvim"
+  use "MunifTanjim/nui.nvim"
   use {
-    'svrana/neosolarized.nvim',
-    requires = { 'tjdevries/colorbuddy.nvim' }
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
   }
-  use 'nvim-lualine/lualine.nvim'       -- Statusline
-  use 'nvim-lua/plenary.nvim'           -- Common utilities
-  use 'onsails/lspkind-nvim'            -- vscode-like pictograms
-  use 'hrsh7th/cmp-buffer'              -- nvim-cmp source for buffer words
-  use('MunifTanjim/prettier.nvim')
-  use 'hrsh7th/cmp-nvim-lsp'            -- nvim-cmp source for neovim's built-in LSP
-  use 'hrsh7th/nvim-cmp'                -- Completion
-  use 'neovim/nvim-lspconfig'           -- LSP
-  use 'jose-elias-alvarez/null-ls.nvim' -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
-  use 'williamboman/mason.nvim'
-  use 'williamboman/mason-lspconfig.nvim'
-  use {
-    'nvim-tree/nvim-tree.lua',
-    requires = {
-      'nvim-tree/nvim-web-devicons', -- optional
-    },
-  }
-  use 'nvimdev/lspsaga.nvim' -- LSP UIs
-  use 'L3MON4D3/LuaSnip'
   use {
     'nvim-treesitter/nvim-treesitter',
     run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
   }
-  use 'kyazdani42/nvim-web-devicons' -- File icons
-  use 'nvim-telescope/telescope.nvim'
-  use 'nvim-telescope/telescope-file-browser.nvim'
-  use 'windwp/nvim-autopairs'
-  use 'windwp/nvim-ts-autotag'
-  use { 'numToStr/Comment.nvim',
-    requires = {
-      'JoosepAlviste/nvim-ts-context-commentstring'
-    }
-  }
-  use 'norcalli/nvim-colorizer.lua'
-  use 'folke/zen-mode.nvim'
-  use 'MunifTanjim/eslint.nvim'
-  use({
-    "iamcco/markdown-preview.nvim",
-    run = function() vim.fn["mkdp#util#install"]() end,
-  })
-  use 'akinsho/nvim-bufferline.lua'
-  -- use 'github/copilot.vim'
-  -- Editor
-  use('/RRethy/vim-illuminate')
   use 'lewis6991/gitsigns.nvim'
   use 'tpope/vim-fugitive'
   use 'dinhhuy258/git.nvim' -- For git blame & browse
+  use 'nvim-telescope/telescope.nvim'
+  use 'nvim-telescope/telescope-file-browser.nvim'
+  use 'RRethy/vim-illuminate'
+  use 'folke/trouble.nvim'
+  -- Editor plugins end --
+
+  -- Coding --
+  use('MunifTanjim/prettier.nvim')
+  use 'MunifTanjim/eslint.nvim'
+  use 'echasnovski/mini.pairs'
+  use 'echasnovski/mini.surround'
+  use 'echasnovski/mini.comment'
+  use 'windwp/nvim-ts-autotag'
+  use 'L3MON4D3/LuaSnip'
+  use 'hrsh7th/cmp-nvim-lsp'            -- nvim-cmp source for neovim's built-in LSP
+  use "hrsh7th/cmp-path"
+  use 'hrsh7th/cmp-buffer'              -- nvim-cmp source for buffer words
+  use 'hrsh7th/nvim-cmp'                -- Completion
+  use 'jose-elias-alvarez/null-ls.nvim' -- Use Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
   use { 'mhartington/formatter.nvim' }
+
+  -- Coding end --
+
+  -- LSP --
+  use 'neovim/nvim-lspconfig' -- LSP
+  use 'williamboman/mason.nvim'
+  use 'williamboman/mason-lspconfig.nvim'
+  -- LSP end
+
+  -- UI --
+  use 'nvim-lualine/lualine.nvim' -- Statusline
+  use 'akinsho/nvim-bufferline.lua'
+  use 'onsails/lspkind-nvim'      -- vscode-like pictograms
+  use 'folke/lsp-colors.nvim'
+  use 'norcalli/nvim-colorizer.lua'
+  use 'nvimdev/lspsaga.nvim' -- LSP UIs
+  use "nvim-tree/nvim-web-devicons"
   use {
-    "klen/nvim-config-local",
-    config = function()
-      require('config-local').setup {
-        -- Default options (optional)
-
-        -- Config file patterns to load (lua supported)
-        config_files = { ".nvim.lua", ".nvimrc", ".exrc" },
-
-        -- Where the plugin keeps files data
-        hashfile = vim.fn.stdpath("data") .. "/config-local",
-
-        autocommands_create = true, -- Create autocommands (VimEnter, DirectoryChanged)
-        commands_create = true,     -- Create commands (ConfigLocalSource, ConfigLocalEdit, ConfigLocalTrust, ConfigLocalIgnore)
-        silent = false,             -- Disable plugin messages (Config loaded/ignored)
-        lookup_parents = false,     -- Lookup config files in parent directories
-      }
-    end
+    'svrana/neosolarized.nvim',
+    requires = { 'tjdevries/colorbuddy.nvim' }
   }
+  use "lukas-reineke/indent-blankline.nvim"
+  -- UI end --
+
+  -- Automatically set up your configuration after cloning packer.nvim
+  -- Put this at the end after all plugins
   if packer_bootstrap then
     require('packer').sync()
   end

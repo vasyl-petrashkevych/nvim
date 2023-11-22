@@ -1,5 +1,5 @@
 local keymap = vim.keymap
-keymap.set('n', '<leader>h', ':nohlsearch<CR>')
+keymap.set('n', '<Space>h', ':nohlsearch<CR>')
 keymap.set('n', 'x', '"_x')
 
 -- Increment/decrement

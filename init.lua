@@ -1,7 +1,7 @@
-require("core.keymaps")
-require("core.plugins")
 require("core.settings")
-require("core.plugin_config")
+require("core.general-keymaps")
+require("core.plugins")
+require("core.plugins-configurations")
 
 local os = vim.loop.os_uname().sysname
 
@@ -10,4 +10,3 @@ if os == "Linux" then
 elseif os == "Windows_NT" then
   require("core.windows")
 end
-

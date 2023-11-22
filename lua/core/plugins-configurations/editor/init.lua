@@ -1,0 +1,7 @@
+require("core.plugins-configurations.editor.neo-tree")
+require("core.plugins-configurations.editor.treesitter")
+require("core.plugins-configurations.editor.fugitive")
+require("core.plugins-configurations.editor.git")
+require("core.plugins-configurations.editor.gitsings")
+require("core.plugins-configurations.editor.teleskope")
+require("core.plugins-configurations.editor.illuminate")
