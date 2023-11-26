@@ -35,3 +35,7 @@ keymap.set('n', '<Space>w<right>', '<C-w>>')
 keymap.set('n', '<Space>w<up>', '<C-w>+')
 keymap.set('n', '<Space>w<down>', '<C-w>-')
 keymap.set('n', '<Space>we', '<C-w>=')
+
+-- Insert mode
+keymap.set('i', '<C-f>', '<right>')
+keymap.set('i', '<C-b>', '<left>')
