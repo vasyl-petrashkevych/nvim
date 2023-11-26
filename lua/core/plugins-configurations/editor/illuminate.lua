@@ -46,8 +46,8 @@ illuminate.configure({
   -- min_count_to_highlight: minimum number of matches required to perform highlighting
   min_count_to_highlight = 1,
 })
-
-local color = "#2d3335"
-vim.cmd("hi def IlluminatedWordText ctermfg=123 guibg=" .. color)
-vim.cmd("hi def IlluminatedWordRead ctermfg=123 guibg=" .. color)
-vim.cmd("hi def IlluminatedWordWrite ctermfg=123 guibg=" .. color)
+local color = "#2d3333"
+-- change the highlight style
+vim.api.nvim_set_hl(0, "IlluminatedWordText", { bg = color })
+vim.api.nvim_set_hl(0, "IlluminatedWordRead", { bg = color })
+vim.api.nvim_set_hl(0, "IlluminatedWordWrite", { bg = color })
