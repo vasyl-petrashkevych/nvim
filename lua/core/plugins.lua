@@ -82,6 +82,7 @@ local plugins = {
   'nvimdev/lspsaga.nvim', -- LSP UIs
   "nvim-tree/nvim-web-devicons",
   'tjdevries/colorbuddy.nvim',
+  { 'akinsho/toggleterm.nvim', version = "*", config = true },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",

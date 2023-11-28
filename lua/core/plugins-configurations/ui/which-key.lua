@@ -38,7 +38,11 @@ local mappings = {
     k = { "<C-w>k", "Go to top window" },
     s = { ":split<Return><C-w>w", "Split window horisontaly" },
     v = { ":vsplit<Return><C-w>w", "Split window verticaly" },
-    q = { ":close", "Close window" },
+    q = { ":close<cr>", "Close window" },
+  },
+  o = {
+    name = "+open",
+    t = { ":ToggleTerm<cr>", "Open terminal" }
   }
 }
 wk.register(mappings, opts)
