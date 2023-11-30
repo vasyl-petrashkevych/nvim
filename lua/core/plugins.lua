@@ -65,6 +65,7 @@ local plugins = {
   'hrsh7th/nvim-cmp',                -- Completion
   'jose-elias-alvarez/null-ls.nvim', --  Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
   'mhartington/formatter.nvim',
+  "klen/nvim-config-local",
   -- Coding end --
 
   -- LSP --

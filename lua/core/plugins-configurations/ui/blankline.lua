@@ -29,7 +29,7 @@ blankline.setup({
   indent = {
     char = "│",
     tab_char = "│",
-    highlight = highlight
+    -- highlight = highlight
   },
   scope = { enabled = false },
   exclude = {
