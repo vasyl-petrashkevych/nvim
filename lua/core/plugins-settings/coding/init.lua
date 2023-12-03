@@ -1,0 +1,5 @@
+require("core.plugins-settings.coding.lsp")
+require("core.plugins-settings.coding.cmp")
+require("core.plugins-settings.coding.mason")
+require("core.plugins-settings.coding.mini-surround")
+require("core.plugins-settings.coding.mini-pairs")

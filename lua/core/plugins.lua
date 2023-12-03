@@ -11,25 +11,103 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 local plugins = {
-  'wbthomason/packer.nvim',
+  -- Coding --
+  {
+    -- LSP Configuration & Plugins
+    'neovim/nvim-lspconfig',
+    dependencies = {
+      -- Automatically install LSPs to stdpath for neovim
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
 
-  -- Editor plugins --
-  "nvim-lua/plenary.nvim",
+      -- Useful status updates for LSP
+      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
+      { 'j-hui/fidget.nvim', opts = {} },
+
+      -- Additional lua configuration, makes nvim stuff amazing!
+      'folke/neodev.nvim',
+    },
+  },
+  -- "gc" to comment visual regions/lines
+  { 'numToStr/Comment.nvim', opts = {} },
+  'echasnovski/mini.pairs',
+  'echasnovski/mini.surround',
+  'echasnovski/mini.comment',
+  'windwp/nvim-ts-autotag',
   {
-    "MunifTanjim/nui.nvim",
-    {
-      "nvim-neo-tree/neo-tree.nvim",
-      branch = "v3.x",
-      dependencies = {
-        "nvim-lua/plenary.nvim",
-        "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-        "MunifTanjim/nui.nvim",
-        -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
-      }
-    } },
+    -- Autocompletion
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+      -- Snippet Engine & its associated nvim-cmp source
+      'L3MON4D3/LuaSnip',
+      'saadparwaiz1/cmp_luasnip',
+
+      -- Adds LSP completion capabilities
+      'hrsh7th/cmp-nvim-lsp',
+
+      -- Adds a number of user-friendly snippets
+      'rafamadriz/friendly-snippets',
+    },
+  },
+  -- end coding --
+  -- UI --
+  "onsails/lspkind-nvim",
   {
+    -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
-    run = function() require('nvim-treesitter.install').update({ with_sync = true }) end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter-textobjects',
+    },
+    build = ':TSUpdate',
+  },
+  {
+    -- Theme inspired by Atom
+    'navarasu/onedark.nvim',
+    priority = 1000,
+    config = function()
+      vim.cmd.colorscheme 'onedark'
+    end,
+  },
+  {
+    -- Add indentation guides even on blank lines
+    'lukas-reineke/indent-blankline.nvim',
+    -- Enable `lukas-reineke/indent-blankline.nvim`
+    -- See `:help ibl`
+    main = 'ibl',
+    opts = {},
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' }
+  },
+  -- UI end --
+  -- Editor --
+  {
+    "kdheepak/lazygit.nvim",
+    -- optional for floating window border decoration
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+    },
+  },
+  -- Fuzzy Finder (files, lsp, etc)
+  {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = {
+      'nvim-lua/plenary.nvim',
+      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
+      -- Only load if `make` is available. Make sure you have the system
+      -- requirements installed.
+      {
+        'nvim-telescope/telescope-fzf-native.nvim',
+        -- NOTE: If you are having trouble with this installation,
+        --       refer to the README for telescope-fzf-native for more instructions.
+        build = 'make',
+        cond = function()
+          return vim.fn.executable 'make' == 1
+        end,
+      },
+    },
   },
   {
     "kdheepak/lazygit.nvim",
@@ -44,46 +122,17 @@ local plugins = {
   },
   'lewis6991/gitsigns.nvim',
   -- 'tpope/vim-fugitive',
-  'dinhhuy258/git.nvim', -- For git blame & browse
-  'nvim-telescope/telescope.nvim',
-  'nvim-telescope/telescope-file-browser.nvim',
-  'RRethy/vim-illuminate',
-  'folke/trouble.nvim',
-  -- Editor plugins end --
-
-  -- Coding --
-  'MunifTanjim/prettier.nvim',
-  'MunifTanjim/eslint.nvim',
-  'echasnovski/mini.pairs',
-  'echasnovski/mini.surround',
-  'echasnovski/mini.comment',
-  'windwp/nvim-ts-autotag',
-  'L3MON4D3/LuaSnip',
-  'hrsh7th/cmp-nvim-lsp',            -- nvim-cmp source for neovim's built-in LSP
-  "hrsh7th/cmp-path",
-  'hrsh7th/cmp-buffer',              -- nvim-cmp source for buffer words
-  'hrsh7th/nvim-cmp',                -- Completion
-  'jose-elias-alvarez/null-ls.nvim', --  Neovim as a language server to inject LSP diagnostics, code actions, and more via Lua
-  'mhartington/formatter.nvim',
-  "klen/nvim-config-local",
-  -- Coding end --
-
-  -- LSP --
-  'neovim/nvim-lspconfig', -- LSP
-  'williamboman/mason.nvim',
-  'williamboman/mason-lspconfig.nvim',
-  -- LSP end
-
-  -- UI --
-  'nvim-lualine/lualine.nvim', -- Statusline
-  'akinsho/nvim-bufferline.lua',
-  'onsails/lspkind-nvim',      -- vscode-like pictograms
-  'folke/lsp-colors.nvim',
-  'norcalli/nvim-colorizer.lua',
-  'nvimdev/lspsaga.nvim', -- LSP UIs
-  "nvim-tree/nvim-web-devicons",
-  'tjdevries/colorbuddy.nvim',
-  { 'akinsho/toggleterm.nvim', version = "*", config = true },
+  'dinhhuy258/git.nvim', -- For gi
+  {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+      "MunifTanjim/nui.nvim",
+      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
+  },
   {
     "folke/which-key.nvim",
     event = "VeryLazy",
@@ -97,11 +146,8 @@ local plugins = {
       -- refer to the configuration section below
     }
   },
-  {
-    'svrana/neosolarized.nvim',
-    depenencies = { 'tjdevries/colorbuddy.nvim' }
-  },
-  "lukas-reineke/indent-blankline.nvim",
+  -- Editor --
+
 }
 local options = {}
 require("lazy").setup(plugins, options)
