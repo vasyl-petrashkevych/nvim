@@ -1,7 +1,10 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 require("core.settings")
-require("core.general-keymaps")
 require("core.plugins")
-require("core.plugins-configurations")
+require("core.plugins-settings")
+require("core.keymaps")
 
 local os = vim.loop.os_uname().sysname
 

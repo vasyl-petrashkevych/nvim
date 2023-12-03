@@ -42,7 +42,12 @@ local mappings = {
   },
   o = {
     name = "+open",
-    t = { ":ToggleTerm<cr>", "Open terminal" }
+    e = { ":Neotree<cr>", "Open project explorer" }
+  },
+  g = {
+    name = "+git",
+    g = { ":LazyGit<cr>", "Open Lazy git" }
   }
+
 }
 wk.register(mappings, opts)

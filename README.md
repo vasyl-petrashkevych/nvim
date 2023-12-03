@@ -1,7 +1,9 @@
 # nvim
 Private Neovim configuration
 
-pamac install lua-language-server
+pamac install lua-language-server fish lazygit
+
+
 npm install -g vscode-langservers-extracted
 npm install -g typescript typescript-language-server
 npm i intelephense -g
