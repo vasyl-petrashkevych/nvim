@@ -59,7 +59,7 @@ local plugins = {
     },
     build = ':TSUpdate',
   },
-  { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+  -- { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
   {
     'nvimdev/lspsaga.nvim',
     config = function()
@@ -70,14 +70,10 @@ local plugins = {
       'nvim-tree/nvim-web-devicons'      -- optional
     }
   },
-  -- {
-  --   -- Theme inspired by Atom
-  --   'navarasu/onedark.nvim',
-  --   priority = 1000,
-  --   config = function()
-  --     vim.cmd.colorscheme 'onedark'
-  --   end,
-  -- },
+  {
+    -- Theme inspired by Atom
+    'navarasu/onedark.nvim'
+  },
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',

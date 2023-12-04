@@ -16,6 +16,7 @@ mason_conf.setup {
     "graphql",
     "docker_compose_language_service",
     "dockerls",
+    "bashls"
   },
   automatic_installation = true
 }
