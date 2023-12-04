@@ -62,14 +62,7 @@ nvim_lsp.cssls.setup {
 }
 
 nvim_lsp.stylelint_lsp.setup {
-  on_attach = function(client, bufnr)
-    vim.api.nvim_create_autocmd("BufWritePre", {
-      buffer = bufnr,
-      command = 'stylelint',
-      args = { '--fix', '--stdin', '--stdin-filename', '%filepath' },
-    })
-  end,
-
+  filetypes = { "css", "scss", "less" },
   settings = {
     stylelintplus = {
       autoFixOnSave = true,
@@ -88,6 +81,9 @@ nvim_lsp.eslint.setup({
   end,
 })
 nvim_lsp.tsserver.setup {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+  end,
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
   cmd = { "typescript-language-server", "--stdio" },
   capabilities = capabilities

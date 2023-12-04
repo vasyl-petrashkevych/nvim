@@ -29,7 +29,6 @@ local plugins = {
     },
   },
   -- "gc" to comment visual regions/lines
-  { 'numToStr/Comment.nvim', opts = {} },
   'echasnovski/mini.pairs',
   'echasnovski/mini.surround',
   'echasnovski/mini.comment',
@@ -60,14 +59,25 @@ local plugins = {
     },
     build = ':TSUpdate',
   },
+  { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
   {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim',
-    priority = 1000,
+    'nvimdev/lspsaga.nvim',
     config = function()
-      vim.cmd.colorscheme 'onedark'
+      require('lspsaga').setup({})
     end,
+    dependencies = {
+      'nvim-treesitter/nvim-treesitter', -- optional
+      'nvim-tree/nvim-web-devicons'      -- optional
+    }
   },
+  -- {
+  --   -- Theme inspired by Atom
+  --   'navarasu/onedark.nvim',
+  --   priority = 1000,
+  --   config = function()
+  --     vim.cmd.colorscheme 'onedark'
+  --   end,
+  -- },
   {
     -- Add indentation guides even on blank lines
     'lukas-reineke/indent-blankline.nvim',
