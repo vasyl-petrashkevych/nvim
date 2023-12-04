@@ -47,7 +47,14 @@ local mappings = {
   g = {
     name = "+git",
     g = { ":LazyGit<cr>", "Open Lazy git" }
+  },
+  c = {
+    name = "+code",
+    f = { vim.lsp.buf.format({ async = true }), "Format buffer" },
+    s = { "<Cmd>Lspsaga outline<cr>", "Code structure" },
+  },
+  s = {
+    name = "+search"
   }
-
 }
 wk.register(mappings, opts)

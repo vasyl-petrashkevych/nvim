@@ -10,8 +10,9 @@ if not vim.loop.fs_stat(lazypath) then
   })
 end
 vim.opt.rtp:prepend(lazypath)
+
 local plugins = {
-  -- Coding --
+  ------------ CODING -----------------------------
   {
     -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
@@ -19,16 +20,11 @@ local plugins = {
       -- Automatically install LSPs to stdpath for neovim
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-
-      -- Useful status updates for LSP
-      -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
       { 'j-hui/fidget.nvim', opts = {} },
-
       -- Additional lua configuration, makes nvim stuff amazing!
       'folke/neodev.nvim',
     },
   },
-  -- "gc" to comment visual regions/lines
   'echasnovski/mini.pairs',
   'echasnovski/mini.surround',
   'echasnovski/mini.comment',
@@ -48,9 +44,10 @@ local plugins = {
       'rafamadriz/friendly-snippets',
     },
   },
-  -- end coding --
-  -- UI --
-  "onsails/lspkind-nvim",
+  --------- END CODING ----------------------------
+
+  ------------ UI -----------------------------
+  { "ellisonleao/gruvbox.nvim" },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -59,62 +56,17 @@ local plugins = {
     },
     build = ':TSUpdate',
   },
-  -- { "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
-  {
-    'nvimdev/lspsaga.nvim',
-    config = function()
-      require('lspsaga').setup({})
-    end,
-    dependencies = {
-      'nvim-treesitter/nvim-treesitter', -- optional
-      'nvim-tree/nvim-web-devicons'      -- optional
-    }
-  },
-  {
-    -- Theme inspired by Atom
-    'navarasu/onedark.nvim'
-  },
-  {
-    -- Add indentation guides even on blank lines
-    'lukas-reineke/indent-blankline.nvim',
-    -- Enable `lukas-reineke/indent-blankline.nvim`
-    -- See `:help ibl`
-    main = 'ibl',
-    opts = {},
-  },
   {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }
   },
-  -- UI end --
-  -- Editor --
-  {
-    "kdheepak/lazygit.nvim",
-    -- optional for floating window border decoration
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-  },
-  -- Fuzzy Finder (files, lsp, etc)
-  {
-    'nvim-telescope/telescope.nvim',
-    branch = '0.1.x',
-    dependencies = {
-      'nvim-lua/plenary.nvim',
-      -- Fuzzy Finder Algorithm which requires local dependencies to be built.
-      -- Only load if `make` is available. Make sure you have the system
-      -- requirements installed.
-      {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        -- NOTE: If you are having trouble with this installation,
-        --       refer to the README for telescope-fzf-native for more instructions.
-        build = 'make',
-        cond = function()
-          return vim.fn.executable 'make' == 1
-        end,
-      },
-    },
-  },
+  "onsails/lspkind-nvim",
+  'folke/lsp-colors.nvim',
+  'norcalli/nvim-colorizer.lua',
+  'nvimdev/lspsaga.nvim',
+  ------------ END UI -----------------------------
+  ------------ EDITOR -----------------------------
+
   {
     "kdheepak/lazygit.nvim",
     -- optional for floating window border decoration
@@ -136,7 +88,6 @@ local plugins = {
       "nvim-lua/plenary.nvim",
       "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
       "MunifTanjim/nui.nvim",
-      -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
     }
   },
   {
@@ -146,14 +97,8 @@ local plugins = {
       vim.o.timeout = true
       vim.o.timeoutlen = 300
     end,
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    }
   },
-  -- Editor --
-
+  ------------ END EDITOR -----------------------------
 }
 local options = {}
 require("lazy").setup(plugins, options)

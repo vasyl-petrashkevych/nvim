@@ -1,7 +1,4 @@
-local status, theme = pcall(require, "onedark")
+local status, theme = pcall(require, "gruvbox")
 if (not status) then return end
-
-theme.setup({
-  style = 'deep'
-})
-theme.load()
+theme.setup()
+vim.cmd("colorscheme gruvbox")
