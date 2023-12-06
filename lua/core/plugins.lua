@@ -39,7 +39,8 @@ local plugins = {
 
       -- Adds LSP completion capabilities
       'hrsh7th/cmp-nvim-lsp',
-
+      "hrsh7th/cmp-buffer",
+      "hrsh7th/cmp-path",
       -- Adds a number of user-friendly snippets
       'rafamadriz/friendly-snippets',
     },
@@ -47,7 +48,10 @@ local plugins = {
   --------- END CODING ----------------------------
 
   ------------ UI -----------------------------
-  { "ellisonleao/gruvbox.nvim" },
+  -- { "ellisonleao/gruvbox.nvim" },
+  -- Using Packer
+  'navarasu/onedark.nvim',
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
   {
     -- Highlight, edit, and navigate code
     'nvim-treesitter/nvim-treesitter',
@@ -60,6 +64,7 @@ local plugins = {
     'nvim-lualine/lualine.nvim',
     dependencies = { 'nvim-tree/nvim-web-devicons' }
   },
+  'RRethy/vim-illuminate',
   "onsails/lspkind-nvim",
   'folke/lsp-colors.nvim',
   'norcalli/nvim-colorizer.lua',
