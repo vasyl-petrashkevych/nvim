@@ -79,9 +79,6 @@ local plugins = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim"
     },
-    config = function()
-      require("telescope").load_extension("lazygit")
-    end,
   },
   'lewis6991/gitsigns.nvim',
   -- 'tpope/vim-fugitive',

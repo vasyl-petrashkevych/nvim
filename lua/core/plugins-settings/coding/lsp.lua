@@ -88,8 +88,21 @@ nvim_lsp.clangd.setup {
   end,
   apabilities = capabilities,
 }
-nvim_lsp.cmake.setup {}
-nvim_lsp.bashls.setup {}
+
+nvim_lsp.cmake.setup {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    enable_format_on_save(client, bufnr)
+  end,
+
+}
+
+nvim_lsp.bashls.setup {
+  on_attach = function(client, bufnr)
+    on_attach(client, bufnr)
+    enable_format_on_save(client, bufnr)
+  end,
+}
 
 
 local php_cap = vim.lsp.protocol.make_client_capabilities()

@@ -3,7 +3,7 @@ Private Neovim configuration
 
 ## Manjaro
 ```bash
-pamac install lua-language-server fish lazygit docker docker-compose bat clangd clang
+pamac install -S lua-language-server fish lazygit docker docker-compose bat clangd clang python-pip cmake-language-server
 ```
 ## For .zshrc or .bashrc
 ```bash
