@@ -159,8 +159,13 @@ return {
         },
         bashls = {},
         intelephense = {
+          cmd = { "intelephense", "--stdio" },
+          filetypes = { "php" },
           settings = {
             intelephense = {
+              diagnostics = {
+                enable = true,
+              },
               stubs = {
                 "bcmath",
                 "bz2",
@@ -216,6 +221,17 @@ return {
                 includePaths = {
                   "/home/wisehunter/.config/composer/vendor/php-stubs/",
                   "/home/wisehunter/.config/composer/vendor/wpsyntex/",
+                },
+              },
+              json = {
+                schemas = {
+                  {
+                    description = "NPM configuration file",
+                    fileMatch = {
+                      "package.json",
+                    },
+                    url = "https://json.schemastore.org/package.json",
+                  },
                 },
               },
               files = {

@@ -3,10 +3,9 @@ return {
     "christoomey/vim-tmux-navigator",
     lazy = false,
   },
-
   {
     "klen/nvim-config-local",
-    config = function()
+    opts = function(_, opts)
       require("config-local").setup({
         -- Default options (optional)
 
