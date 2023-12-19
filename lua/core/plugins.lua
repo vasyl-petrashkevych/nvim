@@ -12,6 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
+  {
+    "christoomey/vim-tmux-navigator",
+    lazy = false,
+  },
   ------------ CODING -----------------------------
   {
     -- LSP Configuration & Plugins
@@ -45,12 +49,13 @@ local plugins = {
       'rafamadriz/friendly-snippets',
     },
   },
+  { "klen/nvim-config-local" },
   --------- END CODING ----------------------------
 
   ------------ UI -----------------------------
-  -- { "ellisonleao/gruvbox.nvim" },
+  { "ellisonleao/gruvbox.nvim" },
   -- Using Packer
-  'navarasu/onedark.nvim',
+  -- 'navarasu/onedark.nvim',
   { "lukas-reineke/indent-blankline.nvim", main = "ibl" },
   {
     -- Highlight, edit, and navigate code
@@ -70,8 +75,8 @@ local plugins = {
   'norcalli/nvim-colorizer.lua',
   'nvimdev/lspsaga.nvim',
   ------------ END UI -----------------------------
-  ------------ EDITOR -----------------------------
 
+  ------------ EDITOR -----------------------------
   {
     "kdheepak/lazygit.nvim",
     -- optional for floating window border decoration

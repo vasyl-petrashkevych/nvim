@@ -42,7 +42,7 @@ local mappings = {
   },
   o = {
     name = "+open",
-    e = { ":Neotree<cr>", "Open project explorer" }
+    e = { ":Neotree toggle<cr>", "Open project explorer" }
   },
   g = {
     name = "+git",

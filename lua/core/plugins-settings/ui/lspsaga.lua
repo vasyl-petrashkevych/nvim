@@ -4,9 +4,10 @@ if (not status) then return end
 saga.setup({
   ui = {
     border = 'rounded',
+    code_action = '',
   },
   symbol_in_winbar = {
-    enable = false
+    enable = false,
   },
   lightbulb = {
     enable = true,
