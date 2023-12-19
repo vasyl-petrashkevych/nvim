@@ -1,11 +1,9 @@
 {
   "extras": [
-    "lazyvim.plugins.extras.lang.clangd",
-    "lazyvim.plugins.extras.lang.cmake"
+
   ],
   "news": {
-    "NEWS.md": "2123",
-    "doc/news.txt": "13995"
+    "NEWS.md": "2123"
   },
   "version": 2
 }
