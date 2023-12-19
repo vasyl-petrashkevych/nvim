@@ -1,3 +1,24 @@
--- Keymaps are automatically loaded on the VeryLazy event
--- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
+local keymap = vim.keymap
+keymap.set("n", "<Space>h", ":nohlsearch<CR>")
+keymap.set("n", "x", '"_x')
+
+-- Increment/decrement
+keymap.set("n", "+", "<C-a>")
+keymap.set("n", "-", "<C-x>")
+
+-- Select all
+keymap.set("n", "<C-a>", "gg<S-v>G")
+keymap.set("n", "<C-q>", ":w<cr>")
+keymap.set("i", "<C-q>", ":w<cr>")
+
+-- Insert mode
+keymap.set("i", "<C-l>", "<right>")
+keymap.set("i", "<C-h>", "<left>")
+keymap.set("i", "<C-k>", "<up>")
+keymap.set("i", "<C-j>", "<down>")
+
+-- Tmux --
+keymap.set("n", "<C-h>", "<cmd>TmuxNavigateRight<cr>")
+keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
+keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
+keymap.set("n", "<C-l>", "<cmd>TmuxNavigateLeft<cr>")
