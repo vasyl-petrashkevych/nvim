@@ -22,3 +22,9 @@ keymap.set("n", "<C-h>", "<cmd>TmuxNavigateRight<cr>")
 keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
 keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
 keymap.set("n", "<C-l>", "<cmd>TmuxNavigateLeft<cr>")
+-- file --
+keymap.set("n", "<leader>fw", ":w<cr>", { desc = "Write file" })
+-- window --
+keymap.set("n", "<leader>wq", "<C-w>:close<cr>", { desc = "Close window" })
+keymap.set("n", "<leader>ws", "<C-w>s<cr>", { desc = "Split window horiontaly" })
+keymap.set("n", "<leader>wv", "<C-w>v<cr>", { desc = "Split window " })

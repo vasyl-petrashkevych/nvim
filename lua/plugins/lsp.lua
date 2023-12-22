@@ -1,32 +1,3 @@
-local linters = {
-  phpcs = {
-    command = "vendor/bin/phpcs",
-    debounce = 300,
-    rootPatterns = { "composer.lock", "vendor", ".git" },
-    args = { "--report=emacs", "-s", "-" },
-    offsetLine = 0,
-    offsetColumn = 0,
-    sourceName = "phpcs",
-    formatLines = 1,
-    formatPattern = {
-      "^.*:(\\d+):(\\d+):\\s+(.*)\\s+-\\s+(.*)(\\r|\\n)*$",
-      {
-        line = 1,
-        column = 2,
-        message = 4,
-        security = 3,
-      },
-    },
-    securities = {
-      error = "error",
-      warning = "warning",
-    },
-    requiredFiles = { "vendor/bin/phpcs" },
-  },
-}
-local filetypes = {
-  php = { "phpcs" },
-}
 return {
   -- tools
   {
@@ -42,10 +13,18 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       inlay_hints = { enabled = true },
-      ---@type lspconfig.options
       servers = {
+        eslint = {
+          on_attach = function(client, bufnr)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+              buffer = bufnr,
+              command = "EslintFixAll",
+            })
+          end,
+        },
         cssls = {},
         tsserver = {
+          on_attach = function(client, bufnr) end,
           root_dir = function(...)
             return require("lspconfig.util").root_pattern(".git")(...)
           end,
@@ -239,13 +218,6 @@ return {
               },
             },
           },
-        },
-      },
-      diagnostics = {
-        filetypes = vim.tbl_keys(filetypes),
-        inint_options = {
-          filetypes = filetypes,
-          linters = linters,
         },
       },
       setup = {},
