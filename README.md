@@ -1,5 +1,5 @@
 # nvim
-Private Neovim configuration
+"rivate Neovim configuration
 
 pamac install lua-language-server fish lazygit
 

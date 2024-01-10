@@ -16,3 +16,5 @@ keymap.set('i', '<C-l>', '<right>')
 keymap.set('i', '<C-h>', '<left>')
 keymap.set('i', '<C-k>', '<up>')
 keymap.set('i', '<C-j>', '<down>')
+
+keymap.set({ 'i', 'n' }, '<C-s>', "<esc>:w<CR>")
