@@ -115,5 +115,45 @@ return {
 
 		lspconfig.cmake.setup {}
 		lspconfig.bashls.setup {}
+
+
+		-- Wordpress
+		-- --Enable (broadcasting) snippet capability for completion
+		local css_capabilities = vim.lsp.protocol.make_client_capabilities()
+		css_capabilities.textDocument.completion.completionItem.snippetSupport = true
+		lspconfig.cssls.setup {
+			capabilities = css_capabilities,
+		}
+		lspconfig.html.setup {
+			capabilities = css_capabilities,
+		}
+
+		lspconfig.stylelint_lsp.setup {
+			filetypes = { "css", "scss", "less" },
+			settings = {
+				stylelintplus = {
+					autoFixOnSave = true,
+					autoFixOnFormat = true,
+				}
+			},
+		}
+
+		lspconfig.eslint.setup({
+			on_attach = function(client, bufnr)
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					buffer = bufnr,
+					command = "EslintFixAll",
+				})
+			end,
+		})
+
+		lspconfig.tsserver.setup {
+			on_attach = function(client, bufnr)
+				on_attach(client, bufnr)
+			end,
+			filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+			cmd = { "typescript-language-server", "--stdio" },
+			capabilities = capabilities
+		}
 	end,
 }
