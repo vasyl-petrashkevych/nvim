@@ -1,4 +1,5 @@
 return {
+	{ 'norcalli/nvim-colorizer.lua' },
 	{ "nvim-tree/nvim-web-devicons", lazy = true },
 	{
 		"nvim-treesitter/nvim-treesitter",
