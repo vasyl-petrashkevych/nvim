@@ -23,3 +23,5 @@ keymap.set("n", "<C-h>", "<cmd>TmuxNavigateRight<cr>")
 keymap.set("n", "<C-j>", "<cmd>TmuxNavigateDown<cr>")
 keymap.set("n", "<C-k>", "<cmd>TmuxNavigateUp<cr>")
 keymap.set("n", "<C-l>", "<cmd>TmuxNavigateLeft<cr>")
+
+keymap.set("n", "<Space>l", "<cmd>Lazy<cr>")

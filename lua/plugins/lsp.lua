@@ -19,6 +19,34 @@ return {
 
 		local protocol = require('vim.lsp.protocol')
 
+		protocol.CompletionItemKind = {
+			'', -- Text
+			'', -- Method
+			'', -- Function
+			'', -- Constructor
+			'', -- Field
+			'', -- Variable
+			'', -- Class
+			'ﰮ', -- Interface
+			'', -- Module
+			'', -- Property
+			'', -- Unit
+			'', -- Value
+			'', -- Enum
+			'', -- Keyword
+			'﬌', -- Snippet
+			'', -- Color
+			'', -- File
+			'', -- Reference
+			'', -- Folder
+			'', -- EnumMember
+			'', -- Constant
+			'', -- Struct
+			'', -- Event
+			'ﬦ', -- Operator
+			'', -- TypeParameter
+		}
+
 		local augroup_format = vim.api.nvim_create_augroup("Format", { clear = true })
 
 		local enable_format_on_save = function(_, bufnr)
@@ -113,8 +141,20 @@ return {
 			apabilities = capabilities,
 		}
 
-		lspconfig.cmake.setup {}
-		lspconfig.bashls.setup {}
+		lspconfig.cmake.setup {
+			on_attach = function(client, bufnr)
+				on_attach(client, bufnr)
+				enable_format_on_save(client, bufnr)
+			end,
+			apabilities = capabilities,
+		}
+		lspconfig.bashls.setup {
+			on_attach = function(client, bufnr)
+				on_attach(client, bufnr)
+				enable_format_on_save(client, bufnr)
+			end,
+			apabilities = capabilities,
+		}
 
 
 		-- Wordpress
@@ -154,6 +194,125 @@ return {
 			filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
 			cmd = { "typescript-language-server", "--stdio" },
 			capabilities = capabilities
+		}
+		lspconfig.intelephense = {
+			cmd = { "intelephense", "--stdio" },
+			filetypes = { "php" },
+			settings = {
+				intelephense = {
+					diagnostics = {
+						enable = true,
+					},
+					stubs = {
+						"bcmath",
+						"bz2",
+						"Core",
+						"curl",
+						"date",
+						"dom",
+						"fileinfo",
+						"filter",
+						"gd",
+						"gettext",
+						"hash",
+						"iconv",
+						"imap",
+						"intl",
+						"json",
+						"libxml",
+						"mbstring",
+						"mcrypt",
+						"mysql",
+						"mysqli",
+						"password",
+						"pcntl",
+						"pcre",
+						"PDO",
+						"pdo_mysql",
+						"Phar",
+						"readline",
+						"regex",
+						"session",
+						"SimpleXML",
+						"sockets",
+						"sodium",
+						"standard",
+						"superglobals",
+						"tokenizer",
+						"xml",
+						"xdebug",
+						"xmlreader",
+						"xmlwriter",
+						"yaml",
+						"zip",
+						"zlib",
+						"wordpress-stubs",
+						"woocommerce-stubs",
+						"acf-pro-stubs",
+						"wordpress-globals",
+						"wp-cli-stubs",
+						"genesis-stubs",
+						"polylang-stubs",
+					},
+					environment = {
+						includePaths = {
+							"/home/wisehunter/.config/composer/vendor/php-stubs/",
+							"/home/wisehunter/.config/composer/vendor/wpsyntex/",
+						},
+					},
+					json = {
+						schemas = {
+							{
+								description = "NPM configuration file",
+								fileMatch = {
+									"package.json",
+								},
+								url = "https://json.schemastore.org/package.json",
+							},
+						},
+					},
+					files = {
+						maxSize = 5000000,
+					},
+				},
+			},
+		}
+		local filetypes = {
+			php = { "phpcs" },
+		}
+		local linters = {
+			phpcs = {
+				command = "vendor/bin/phpcs",
+				debounce = 300,
+				rootPatterns = { "composer.lock", "vendor", ".git" },
+				args = { "--report=emacs", "-s", "-" },
+				offsetLine = 0,
+				offsetColumn = 0,
+				sourceName = "phpcs",
+				formatLines = 1,
+				formatPattern = {
+					"^.*:(\\d+):(\\d+):\\s+(.*)\\s+-\\s+(.*)(\\r|\\n)*$",
+					{
+						line = 1,
+						column = 2,
+						message = 4,
+						security = 3
+					}
+				},
+				securities = {
+					error = "error",
+					warning = "warning",
+				},
+				requiredFiles = { "vendor/bin/phpcs" }
+			},
+		}
+		lspconfig.diagnosticls.setup {
+			on_attach = on_attach,
+			filetypes = vim.tbl_keys(filetypes),
+			init_options = {
+				filetypes = filetypes,
+				linters = linters,
+			},
 		}
 	end,
 }
