@@ -1,5 +1,5 @@
-# Neovim 
-Private Neovim configuration
+# nvim
+"rivate Neovim configuration
 
 ## Manjaro
 ```bash
