@@ -1,15 +1,14 @@
 return {
 	{
-		'nvim-telescope/telescope.nvim',
-		dependencies = { 'nvim-lua/plenary.nvim' }
-	},
-	{
-		"echasnovski/mini.pairs",
+		"echasnovski//mini.pairs",
 		version = "",
+		config = function()
+			require("mini.pairs").setup()
+		end
 	},
 	{
 		'echasnovski/mini.comment',
-		version = false,
+		version = "",
 		config = function()
 			require("mini.comment").setup({
 				options = {
@@ -33,7 +32,7 @@ return {
 	},
 	{
 		'echasnovski/mini.surround',
-		version = false,
+		version = "",
 		config = function()
 			require("mini.surround").setup({
 				{

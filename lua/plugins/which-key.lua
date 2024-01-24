@@ -20,16 +20,6 @@ return {
 		}
 
 		local mappings = {
-			f = {
-				name = "+file",
-				f = { "<cmd>Telescope find_files<cr>", "Find File" },
-				b = { "<cmd>Telescope file_browser<cr>", "Open file browser" },
-				r = { "<cmd>Telescope oldfiles<cr>", "Open Recent File" },
-			},
-			b = {
-				name = "+buffer",
-				b = { "<cmd>Telescope buffers<cr>", "Open buffers" },
-			},
 			w = {
 				name = "+window",
 				w = { "<C-w>w", "Go to next window" },

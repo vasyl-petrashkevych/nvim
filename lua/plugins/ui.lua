@@ -51,9 +51,9 @@ return {
 	{
 		'nvimdev/lspsaga.nvim',
 		keys = {
-			{ '<C-j>',      '<Cmd>Lspsaga diagnostic_jump_next<CR>',  desc = "Lspsaga diagnostic_jump_next",   mode = 'n' },
-			{ '<C-k>',      '<Cmd>Lspsaga diagnostic_jump_prev<CR>',  desc = "Lspsaga diagnostic_jump_prev",   mode = 'n' },
-			{ '<leadr>l',   '<Cmd>Lspsaga show_line_diagnostics<CR>', desc = "Lspsaga show_line_diagnostics ", mode = 'n' },
+			{ '<leader>j',  '<Cmd>Lspsaga diagnostic_jump_next<CR>',  desc = "Lspsaga diagnostic_jump_next",   mode = 'n' },
+			{ '<leader>k',  '<Cmd>Lspsaga diagnostic_jump_prev<CR>',  desc = "Lspsaga diagnostic_jump_prev",   mode = 'n' },
+			{ '<leader>l',  '<Cmd>bspsaga show_line_diagnostics<CR>', desc = "Lspsaga show_line_diagnostics ", mode = 'n' },
 			{ 'K',          '<Cmd>Lspsaga hover_doc<CR>',             desc = "Lspsaga hover doc",              mode = 'n' },
 			{ '<leader>fd', '<Cmd>Lspsaga finder<CR>',                desc = "Lspsaga finder",                 mode = 'n' },
 			{ '<leader>rn', '<Cmd>Lspsaga rename<CR>',                desc = "Lspsaga rename",                 mode = 'n' },
