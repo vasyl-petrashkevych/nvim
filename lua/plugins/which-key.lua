@@ -38,11 +38,11 @@ return {
 			},
 			o = {
 				name = "+open",
-				e = { ":Neotree<cr>", "Open project explorer" }
+				e = { ":Neotree toggle<cr>", "Open project explorer" },
 			},
 			g = {
 				name = "+git",
-				g = { ":LazyGit<cr>", "Open Lazy git" }
+				g = { ":LazyGit<cr>", "Open Lazy git" },
 			},
 			c = {
 				name = "+code",
@@ -50,9 +50,9 @@ return {
 				s = { "<Cmd>Lspsaga outline<cr>", "Code structure" },
 			},
 			s = {
-				name = "+search"
-			}
+				name = "+search",
+			},
 		}
 		wk.register(mappings, opts)
-	end
+	end,
 }

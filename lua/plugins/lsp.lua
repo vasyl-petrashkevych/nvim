@@ -1,13 +1,13 @@
 return {
-	'neovim/nvim-lspconfig',
+	"neovim/nvim-lspconfig",
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		-- Automatically install LSPs to stdpath for neovim
-		'williamboman/mason.nvim',
-		'williamboman/mason-lspconfig.nvim',
-		{ 'j-hui/fidget.nvim', opts = {} },
+		"williamboman/mason.nvim",
+		"williamboman/mason-lspconfig.nvim",
+		{ "j-hui/fidget.nvim", opts = {} },
 		-- Additional lua configuration, makes nvim stuff amazing!
-		'folke/neodev.nvim',
+		"folke/neodev.nvim",
 	},
 	event = { "BufReadPre", "BufNewFile" },
 	config = function()
@@ -17,34 +17,34 @@ return {
 
 		local opts = { noremap = true, silent = true }
 
-		local protocol = require('vim.lsp.protocol')
+		local protocol = require("vim.lsp.protocol")
 
 		protocol.CompletionItemKind = {
-			'', -- Text
-			'', -- Method
-			'', -- Function
-			'', -- Constructor
-			'', -- Field
-			'', -- Variable
-			'', -- Class
-			'ﰮ', -- Interface
-			'', -- Module
-			'', -- Property
-			'', -- Unit
-			'', -- Value
-			'', -- Enum
-			'', -- Keyword
-			'﬌', -- Snippet
-			'', -- Color
-			'', -- File
-			'', -- Reference
-			'', -- Folder
-			'', -- EnumMember
-			'', -- Constant
-			'', -- Struct
-			'', -- Event
-			'ﬦ', -- Operator
-			'', -- TypeParameter
+			"", -- Text
+			"", -- Method
+			"", -- Function
+			"", -- Constructor
+			"", -- Field
+			"", -- Variable
+			"", -- Class
+			"ﰮ", -- Interface
+			"", -- Module
+			"", -- Property
+			"", -- Unit
+			"", -- Value
+			"", -- Enum
+			"", -- Keyword
+			"﬌", -- Snippet
+			"", -- Color
+			"", -- File
+			"", -- Reference
+			"", -- Folder
+			"", -- EnumMember
+			"", -- Constant
+			"", -- Struct
+			"", -- Event
+			"ﬦ", -- Operator
+			"", -- TypeParameter
 		}
 
 		local augroup_format = vim.api.nvim_create_augroup("Format", { clear = true })
@@ -69,7 +69,7 @@ return {
 
 			opts.desc = "Show LSP definitions"
 
-			keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts)   -- show lsp definitions
+			keymap.set("n", "gd", "<cmd>Telescope lsp_definitions<CR>", opts) -- show lsp definitions
 			opts.desc = "Show LSP implementations"
 			keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 			opts.desc = "Show LSP type definitions"
@@ -96,9 +96,9 @@ return {
 			keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessar
 		end
 
-		local capabilities = require('cmp_nvim_lsp').default_capabilities()
+		local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-		lspconfig.lua_ls.setup {
+		lspconfig.lua_ls.setup({
 			capabilities = capabilities,
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
@@ -107,76 +107,73 @@ return {
 			settings = {
 				Lua = {
 					diagnostics = {
-						globals = { 'vim' },
+						globals = { "vim" },
 					},
 					workspace = {
 						library = vim.api.nvim_get_runtime_file("", true),
-						checkThirdParty = false
+						checkThirdParty = false,
 					},
 				},
 			},
-		}
-		lspconfig.docker_compose_language_service.setup {
+		})
+		lspconfig.docker_compose_language_service.setup({
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
 				enable_format_on_save(client, bufnr)
 			end,
 			apabilities = capabilities,
-
-		}
-		lspconfig.dockerls.setup {
+		})
+		lspconfig.dockerls.setup({
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
 				enable_format_on_save(client, bufnr)
 			end,
 			apabilities = capabilities,
+		})
 
-		}
-
-		lspconfig.clangd.setup {
+		lspconfig.clangd.setup({
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
 				enable_format_on_save(client, bufnr)
 			end,
 			apabilities = capabilities,
-		}
+		})
 
-		lspconfig.cmake.setup {
+		lspconfig.cmake.setup({
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
 				enable_format_on_save(client, bufnr)
 			end,
 			apabilities = capabilities,
-		}
-		lspconfig.bashls.setup {
+		})
+		lspconfig.bashls.setup({
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
 				enable_format_on_save(client, bufnr)
 			end,
 			apabilities = capabilities,
-		}
-
+		})
 
 		-- Wordpress
 		-- --Enable (broadcasting) snippet capability for completion
 		local css_capabilities = vim.lsp.protocol.make_client_capabilities()
 		css_capabilities.textDocument.completion.completionItem.snippetSupport = true
-		lspconfig.cssls.setup {
+		lspconfig.cssls.setup({
 			capabilities = css_capabilities,
-		}
-		lspconfig.html.setup {
+		})
+		lspconfig.html.setup({
 			capabilities = css_capabilities,
-		}
+		})
 
-		lspconfig.stylelint_lsp.setup {
+		lspconfig.stylelint_lsp.setup({
 			filetypes = { "css", "scss", "less" },
 			settings = {
 				stylelintplus = {
 					autoFixOnSave = true,
 					autoFixOnFormat = true,
-				}
+				},
 			},
-		}
+		})
 
 		lspconfig.eslint.setup({
 			on_attach = function(client, bufnr)
@@ -187,16 +184,22 @@ return {
 			end,
 		})
 
-		lspconfig.tsserver.setup {
+		lspconfig.tsserver.setup({
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
 			end,
 			filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
 			cmd = { "typescript-language-server", "--stdio" },
-			capabilities = capabilities
-		}
-		lspconfig.intelephense = {
+			capabilities = capabilities,
+		})
+		lspconfig.intelephense.setup({
 			cmd = { "intelephense", "--stdio" },
+			root_pattern = { "composer.json", ".git" },
+			on_attach = function(client, bufnr)
+				on_attach(client, bufnr)
+				enable_format_on_save(client, bufnr)
+			end,
+			capabilities = capabilities,
 			filetypes = { "php" },
 			settings = {
 				intelephense = {
@@ -256,8 +259,8 @@ return {
 					},
 					environment = {
 						includePaths = {
-							"/home/wisehunter/.config/composer/vendor/php-stubs/",
-							"/home/wisehunter/.config/composer/vendor/wpsyntex/",
+							"/home/wisehunter/.config/composer/vendor/php-stubs",
+							"/home/wisehunter/.config/composer/vendor/wpsyntex",
 						},
 					},
 					json = {
@@ -276,43 +279,6 @@ return {
 					},
 				},
 			},
-		}
-		local filetypes = {
-			php = { "phpcs" },
-		}
-		local linters = {
-			phpcs = {
-				command = "vendor/bin/phpcs",
-				debounce = 300,
-				rootPatterns = { "composer.lock", "vendor", ".git" },
-				args = { "--report=emacs", "-s", "-" },
-				offsetLine = 0,
-				offsetColumn = 0,
-				sourceName = "phpcs",
-				formatLines = 1,
-				formatPattern = {
-					"^.*:(\\d+):(\\d+):\\s+(.*)\\s+-\\s+(.*)(\\r|\\n)*$",
-					{
-						line = 1,
-						column = 2,
-						message = 4,
-						security = 3
-					}
-				},
-				securities = {
-					error = "error",
-					warning = "warning",
-				},
-				requiredFiles = { "vendor/bin/phpcs" }
-			},
-		}
-		lspconfig.diagnosticls.setup {
-			on_attach = on_attach,
-			filetypes = vim.tbl_keys(filetypes),
-			init_options = {
-				filetypes = filetypes,
-				linters = linters,
-			},
-		}
+		})
 	end,
 }
