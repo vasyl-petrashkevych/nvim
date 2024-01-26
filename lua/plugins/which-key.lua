@@ -39,6 +39,7 @@ return {
 			o = {
 				name = "+open",
 				e = { ":Neotree toggle<cr>", "Open project explorer" },
+				c = { ":Neotree reveal toggle<cr>", "Open current file explorer" },
 			},
 			g = {
 				name = "+git",
