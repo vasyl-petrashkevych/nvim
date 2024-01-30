@@ -192,6 +192,14 @@ return {
 			cmd = { "typescript-language-server", "--stdio" },
 			capabilities = capabilities,
 		})
+		lspconfig.jsonls.setup({
+			on_attach = function(client, bufnr)
+				on_attach(client, bufnr)
+				enable_format_on_save(client, bufnr)
+			end,
+			capabilities = capabilities,
+			cmd = { "vscode-json-language-server", "--stdio" },
+		})
 		lspconfig.intelephense.setup({
 			cmd = { "intelephense", "--stdio" },
 			root_pattern = { "composer.json", ".git" },
