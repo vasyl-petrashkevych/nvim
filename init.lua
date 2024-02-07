@@ -1,5 +1,5 @@
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
 
 require("core.settings")
 require("core.keymaps")
@@ -17,7 +17,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local opts = {
-	git = { log = { '--since=3 days ago' } },
+	git = { log = { "--since=3 days ago" } },
 	checker = {
 		enabled = true,
 		notify = false,
@@ -44,8 +44,8 @@ local opts = {
 				end,
 				desc = "Open terminal in plugin dir",
 			},
-		}
-	}
+		},
+	},
 }
 require("lazy").setup({ { import = "plugins" } }, opts)
 local os = vim.loop.os_uname().sysname

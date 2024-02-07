@@ -182,13 +182,29 @@ return {
 					command = "EslintFixAll",
 				})
 			end,
+			root_pattern = { ".git" },
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"javascript.jsx",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+			},
 		})
 
 		lspconfig.tsserver.setup({
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
 			end,
-			filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+			filetypes = {
+				"javascript",
+				"javascriptreact",
+				"javascript.jsx",
+				"typescript",
+				"typescriptreact",
+				"typescript.tsx",
+			},
 			cmd = { "typescript-language-server", "--stdio" },
 			capabilities = capabilities,
 		})
@@ -205,7 +221,12 @@ return {
 			root_pattern = { "composer.json", ".git" },
 			on_attach = function(client, bufnr)
 				on_attach(client, bufnr)
-				enable_format_on_save(client, bufnr)
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					callback = function()
+						vim.lsp.buf.format()
+					end,
+				})
+				vim.api.nvim_buf_set_keymap(bufnr, "n", "<space>fm", "<cmd>lua vim.lsp.buf.format()<CR>", {})
 			end,
 			capabilities = capabilities,
 			filetypes = { "php" },
